@@ -30,7 +30,9 @@ Create environment:
 conda create -n trans4trans python=3.7
 conda activate trans4trans
 conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cudatoolkit=11.1 -c pytorch -c conda-forge
-conda install pyyaml pillow requests tqdm ipython scipy opencv-python thop tabulate
+conda install pyyaml pillow requests tqdm ipython scipy tabulate
+pip install opencv-python
+pip install thop
 ```
 
 And install:
