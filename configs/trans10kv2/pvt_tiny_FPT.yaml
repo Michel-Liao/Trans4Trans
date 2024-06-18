@@ -4,17 +4,18 @@ DATASET:
     STD: [0.229, 0.224, 0.225]
     WORKERS: 8
 TRAIN:
-    EPOCHS: 100
+    EPOCHS: 20
+    # EPOCHS: 100
     BATCH_SIZE: 4
     CROP_SIZE: (512, 512)
     BASE_SIZE: 512
-    BACKBONE_PRETRAINED_PATH: "pretrained/pvt_tiny.pth"
-    MODEL_SAVE_DIR: 'workdirs/trans10kv2/pvt_tiny_FPT'
+    BACKBONE_PRETRAINED_PATH: "pretrained/v1/pvt_tiny.pth"
+    MODEL_SAVE_DIR: 'trained_models/trans10kv2/pvt_tiny_FPT'
     APEX: True
 TEST:
     BATCH_SIZE: 4
     CROP_SIZE: (512, 512)
-    TEST_MODEL_PATH: "workdirs/trans10kv2/pvt_tiny_FPT/best_model.pth"
+    TEST_MODEL_PATH: "trained_models/trans10kv2/pvt_tiny_FPT/best_model.pth"
 
 SOLVER:
     OPTIMIZER: "adamw"
