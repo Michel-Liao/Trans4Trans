@@ -32,12 +32,13 @@ conda activate trans4trans
 conda install pytorch==1.10.0 torchvision==0.10.1 torchaudio==0.10.0 cudatoolkit=11.1 -c pytorch -c conda-forge
 conda install pyyaml pillow requests tqdm ipython scipy tabulate
 pip install opencv-python thop six timm
-python -m pip install setuptools==69.5.1
+# python -m pip install setuptools==69.5.1
 
 # From MMSegmentation get_started.md
-pip install -U openmim
-mim install mmengine
-mim install "mmcv>=2.0.0"
+pip install mmcv==2.2.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.3/index.html
+# pip install -U openmim
+# mim install mmengine
+# mim install "mmcv>=2.0.0"
 ```
 
 And install:
@@ -94,7 +95,7 @@ Before training, please modify the [config](./configs) file to match your own pa
 We train our models on 4 1080Ti GPUs, for example:
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node=4 tools/train.py --config-file configs/trans10kv2/pvt_tiny_FPT.yaml
+python -m torch.distributed.launch --nproc_per_node=1 tools/train.py --config-file configs/trans10kv2/pvt_tiny_FPT.yaml
 ```
 
 We recommend to use the [mmsegmentation](https://github.com/open-mmlab/mmsegmentation) framework to train models with higher resolutions (e.g. 768x768).
