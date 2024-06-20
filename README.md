@@ -100,7 +100,7 @@ We train our models on 4 1080Ti GPUs, for example:
 ```bash
 # python -m torch.distributed.launch --nproc_per_node=1 tools/train.py --config-file configs/trans10kv2/pvt_tiny_FPT.yaml
 
-torchrun --nproc_per_node=1 tools/train.py --config-file configs/trans10kv2/pvt_tiny_FPT.yaml
+torchrun --nproc_per_node=1 tools/train.py --config-file configs/transobj/pvt_tiny_FPT.yaml
 
 ```
 
