@@ -7,6 +7,7 @@ from .stanford2d3d import Stanford2d3dSegmentation
 from .cocostuff import COCOStuffSegmentation
 from .acdc import ACDCSegmentation
 from .densepass import DensePASSSegmentation
+from .transobj import TransObjSegmentation
 
 datasets = {
     'cityscape': CitySegmentation,
@@ -15,6 +16,7 @@ datasets = {
     'cocostuff': COCOStuffSegmentation,
     'acdc': ACDCSegmentation,
     'densepass': DensePASSSegmentation,
+    'transobj': TransObjSegmentation,
 }
 
 
