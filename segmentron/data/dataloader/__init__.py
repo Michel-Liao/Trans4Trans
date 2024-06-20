@@ -1,6 +1,7 @@
 """
 This module provides data loaders and transformers for popular vision datasets.
 """
+
 from .cityscapes import CitySegmentation
 from .transparent11 import TransparentSegmentation
 from .stanford2d3d import Stanford2d3dSegmentation
@@ -10,13 +11,13 @@ from .densepass import DensePASSSegmentation
 from .transobj import TransObjSegmentation
 
 datasets = {
-    'cityscape': CitySegmentation,
-    'transparent11': TransparentSegmentation, 
-    'stanford2d3d': Stanford2d3dSegmentation,
-    'cocostuff': COCOStuffSegmentation,
-    'acdc': ACDCSegmentation,
-    'densepass': DensePASSSegmentation,
-    'transobj': TransObjSegmentation,
+    "cityscape": CitySegmentation,
+    "transparent11": TransparentSegmentation,
+    "stanford2d3d": Stanford2d3dSegmentation,
+    "cocostuff": COCOStuffSegmentation,
+    "acdc": ACDCSegmentation,
+    "densepass": DensePASSSegmentation,
+    "transobj": TransObjSegmentation,
 }
 
 

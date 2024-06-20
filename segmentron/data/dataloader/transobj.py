@@ -47,11 +47,6 @@ class TransObjSegmentation(SegmentationDataset):
         mode=None,
         transform=None,
         **kwargs
-        # crop_size=[480, 640],
-        # fmin=10.0,
-        # fmax=75.0,
-        # augmentation=None,
-        # sample=True,
     ):
         """
         Arguments:
@@ -80,29 +75,35 @@ class TransObjSegmentation(SegmentationDataset):
         # self.scene_info = pickle.load(open("datasets/TartanAir.pickle", "rb"))[0]
 
         # self._build_dataset_index()
-        self.npz_paths, self.png_paths = self._load_data_paths()
 
         # NOTE: All new code below
         super(TransObjSegmentation, self).__init__(
             root, split, mode, transform, **kwargs
         )
         # root = os.path.join(self.root, self.BASE_DIR)
-        root = os.path.join(self.root)
-        assert os.path.exists(
-            root
-        ), "Please put the data in {SEG_ROOT}/datasets/transobj"
-        self.images, self.masks = self._load_data_paths(self)
-        assert len(self.images) == len(self.masks)
-        if len(self.images) == 0:
-            raise RuntimeError("Found 0 images in subfolders of:" + root + "\n")
-        logging.info("Found {} images in the folder {}".format(len(self.images), root))
+        # root = os.path.join(self.root)
 
-    def _load_data_paths(self):
+        root = Path(root)
+
+        self.npz_paths, self.png_paths = self._load_data_paths(root)
+
+        # assert os.path.exists(
+        #     root
+        # ), "Please put the data in {SEG_ROOT}/datasets/transobj"
+        # self.images, self.masks = self._load_data_paths(self)
+        # assert len(self.images) == len(self.masks)
+        # if len(self.images) == 0:
+        #     raise RuntimeError("Found 0 images in subfolders of:" + root + "\n")
+        logging.info(
+            "Found {} images in the folder {}".format(len(self.png_paths), root)
+        )
+
+    def _load_data_paths(self, root):
         # ?: Better to use numpy arrays?
         npz_paths = []
         png_paths = []
 
-        for subdir in self.root.iterdir():
+        for subdir in root.iterdir():
             if subdir.is_dir():
                 for frame_dir in subdir.iterdir():
                     sorted_npz_paths = sorted(frame_dir.glob("*.npz"))
