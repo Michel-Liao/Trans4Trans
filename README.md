@@ -42,6 +42,7 @@ pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.5
 # mim install mmengine
 # mim install "mmcv>=2.0.0"
 ```
+Install [apex](https://github.com/NVIDIA/apex?tab=readme-ov-file#quick-start)
 
 And install:
 

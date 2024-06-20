@@ -55,7 +55,7 @@ class TransObjSegmentation(SegmentationDataset):
     ):
         """
         Arguments:
-            root_dir (string): Directory with images and transparency data.
+            root (string): Directory with images and transparency data.
             transform (callable, optional): Optional augmentations to be applied to images.
         """
         # self.root_dir = Path(root_dir)
@@ -68,8 +68,8 @@ class TransObjSegmentation(SegmentationDataset):
         # self.fmin = fmin  # exclude very easy examples
         # self.fmax = fmax  # exclude very hard examples
 
-        if self.augmentation:
-            self.augmentation = TransAugmentor()
+        # if self.augmentation:
+        #     self.augmentation = TransAugmentor()
 
         # ?: Not sure why make cache directory if it's never used.
         # # building dataset is expensive, cache so only needs to be performed once
@@ -102,7 +102,7 @@ class TransObjSegmentation(SegmentationDataset):
         npz_paths = []
         png_paths = []
 
-        for subdir in self.root_dir.iterdir():
+        for subdir in self.root.iterdir():
             if subdir.is_dir():
                 for frame_dir in subdir.iterdir():
                     sorted_npz_paths = sorted(frame_dir.glob("*.npz"))
