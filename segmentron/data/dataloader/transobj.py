@@ -1,27 +1,12 @@
 # Code modified from DVPO
-
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-
-# from torch.utils.data import Dataset, DataLoader
-# import torch.nn.functional as F
-
-# import csv
 import cv2
 
-# import math
-# import random
-# import json
-# import pickle
-
-
-# import os.path as osp
 from pathlib import Path
 
 from .seg_data_base import SegmentationDataset
-
-# ?: Where do they put their augmentations?
-# from .augmentation import TransAugmentor
 
 # from .rgbd_utils import *
 
@@ -46,7 +31,7 @@ class TransObjSegmentation(SegmentationDataset):
         split="test",
         mode=None,
         transform=None,
-        **kwargs
+        **kwargs,
     ):
         """
         Arguments:
@@ -161,6 +146,61 @@ class TransObjSegmentation(SegmentationDataset):
         # return threshold_arr.transpose(1, 2, 0)
         return threshold_arr
 
+    # def __getitem__(self, index):
+    #     """Returns an image and its corresponding transparency mask.
+
+    #     Arguments:
+    #         index (int): Index of the image to be returned.
+    #     """
+    #     npz_path = self.npz_paths[index]
+    #     png_path = self.png_paths[index]
+
+    #     # img = torch.from_numpy(self.image_read(png_path))  # [H, W, C]
+    #     # img = self.image_read(png_path)  # [H, W, C]
+    #     img = Image.open(png_path).convert("RGB")
+
+    #     # if this is a test image, return the image and its name
+
+    #     if self.mode == "test":
+    #         img = self._img_transform(img)
+    #         if self.transform is not None:
+    #             img = self.transform(img)
+    #         return img, os.path.basename(self.png_paths[index])
+
+    #     # ?: Not sure if this will work
+    #     # mask = Image.open(self.masks[index]).convert("P")
+    #     # mask = self.npz_read(npz_path)  # [H, W]
+    #     mask = Image.fromarray(self.npz_read(npz_path), mode="P")
+
+    #     # synchrosized transform
+
+    #     # !: NEED TO UNCOMMENT
+    #     # if self.mode == "train":
+    #     #     img, mask = self._sync_transform(img, mask, resize=True)
+    #     # elif self.mode == "val":
+    #     #     img, mask = self._val_sync_transform_resize(img, mask)
+    #     # else
+    #     #     assert self.mode == "testval"
+    #     #     img, mask = self._val_sync_transform_resize(img, mask)
+
+    #     # general resize, normalize and to Tensor
+
+    #     # !: NEED TO UNCOMMENT
+    #     # if self.transform is not None:
+    #     #     img = self.transform(img)
+
+    #     # return img, mask, os.path.basename(self.images[index])
+
+    #     dict = {"image": img, "mask": mask, "name": os.path.basename(png_path)}
+    #     return dict
+
+    #     # return img, mask, os.path.basename(self.png_paths[index])
+
+    #     # if self.augmentation:
+    #     #     im, transparency_arr = self.augmentation(im, transparency_arr)
+
+    #     # return {"image": im, "transparency_array": transparency_arr}
+
     def __getitem__(self, index):
         """Returns an image and its corresponding transparency mask.
 
@@ -172,15 +212,17 @@ class TransObjSegmentation(SegmentationDataset):
 
         # img = torch.from_numpy(self.image_read(png_path))  # [H, W, C]
         # img = self.image_read(png_path)  # [H, W, C]
-        img = Image.open(png_path).convert("RGB")
+        # img = Image.open(png_path).convert("RGB")
+        # img = Image.open(png_path)
+        img = cv2.cvtColor(cv2.imread(png_path), cv2.COLOR_BGR2RGB)
 
         # if this is a test image, return the image and its name
 
-        if self.mode == "test":
-            img = self._img_transform(img)
-            if self.transform is not None:
-                img = self.transform(img)
-            return img, os.path.basename(self.png_paths[index])
+        # if self.mode == "test":
+        #     img = self._img_transform(img)
+        #     if self.transform is not None:
+        #         img = self.transform(img)
+        #     return img, os.path.basename(self.png_paths[index])
 
         # ?: Not sure if this will work
         # mask = Image.open(self.masks[index]).convert("P")
@@ -188,19 +230,34 @@ class TransObjSegmentation(SegmentationDataset):
         mask = Image.fromarray(self.npz_read(npz_path), mode="P")
 
         # synchrosized transform
-        if self.mode == "train":
-            img, mask = self._sync_transform(img, mask, resize=True)
-        elif self.mode == "val":
-            img, mask = self._val_sync_transform_resize(img, mask)
-        else:
-            assert self.mode == "testval"
-            img, mask = self._val_sync_transform_resize(img, mask)
+
+        # !: NEED TO UNCOMMENT
+        # if self.mode == "train":
+        #     img, mask = self._sync_transform(img, mask, resize=True)
+        # elif self.mode == "val":
+        #     img, mask = self._val_sync_transform_resize(img, mask)
+        # else:
+        #     assert self.mode == "testval"
+        #     img, mask = self._val_sync_transform_resize(img, mask)
 
         # general resize, normalize and to Tensor
+
+        # !: NEED TO UNCOMMENT
+        print(f"SELF.TRANSFORM IS {self.transform}")
+
         if self.transform is not None:
             img = self.transform(img)
+
         # return img, mask, os.path.basename(self.images[index])
-        return img, mask, os.path.basename(self.png_paths[index])
+
+        # dict = {
+        #     "image": np.array(img),
+        #     "mask": np.array(mask),
+        #     "name": os.path.basename(png_path),
+        # }
+        return np.array(img), np.array(mask), os.path.abspath(png_path)
+
+        # return img, mask, os.path.basename(self.png_paths[index])
 
         # if self.augmentation:
         #     im, transparency_arr = self.augmentation(im, transparency_arr)
