@@ -12,7 +12,8 @@ TRAIN:
     BASE_SIZE: 512
     BACKBONE_PRETRAINED_PATH: "pretrained/v1/pvt_tiny.pth"
     MODEL_SAVE_DIR: 'trained_models/transobj/pvt_tiny_FPT'
-    APEX: True
+    APEX: False
+    # APEX: True
 TEST:
     BATCH_SIZE: 4
     CROP_SIZE: (512, 512)
