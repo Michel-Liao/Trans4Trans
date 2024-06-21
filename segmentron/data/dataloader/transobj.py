@@ -242,9 +242,6 @@ class TransObjSegmentation(SegmentationDataset):
 
         # general resize, normalize and to Tensor
 
-        # !: NEED TO UNCOMMENT
-        print(f"SELF.TRANSFORM IS {self.transform}")
-
         if self.transform is not None:
             img = self.transform(img)
 
