@@ -34,4 +34,8 @@ fig.suptitle(name[0])
 ax[0].imshow(img_squeezed)
 ax[1].imshow(mask_squeezed)
 ax[2].imshow(real_image)
-plt.show()
+
+filename = "test.png"
+plt.savefig(filename)
+print(f"Image saved as {filename}")
+# plt.show()
